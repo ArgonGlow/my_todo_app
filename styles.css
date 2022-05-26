@@ -78,6 +78,16 @@ ul {
     list-style: none;
 }
 
+.list-container p {
+    position: absolute;
+    width: 300px;
+    max-width: 95%;
+    left: calc(50% - 150px);
+    font-size: 1.2rem;
+    color: rgb(167, 167, 167);
+    z-index: -1;
+}
+
 .list-item {
     display: flex;
     justify-content: space-between;
@@ -120,7 +130,7 @@ input[type="checkbox"] {
     transition: .3s ease;
 }
 
-.del-btn:hover {
+.del-btn:hover, .del-btn:active {
     background-color: rgba(0, 0, 0, 0);
     color: white;
     transition: .3s ease;
