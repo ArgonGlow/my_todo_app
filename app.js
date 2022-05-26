@@ -3,21 +3,19 @@ const confirmBtn = document.getElementById('add')
 const deleteBtn = document.getElementById('delete')
 const newTaskField = document.getElementById('add-task')
 
-//console.log(taskList)
-
 confirmBtn.addEventListener("click", readNewTask)
 
-//console.log(localStorage[7].innerHTML);
-//taskList.appendChild(localStorage.getItem(7))
+//localStorage.clear // for clearing storage when debugging
 
-//localStorage.clear
 
+// load stored tasks on page-load
 loadTasksFromStorage()
 
+// retrieves all locally stored tasks
 function loadTasksFromStorage() {
-
     let taskArray = []
 
+    // check every object in localStorage
     Object.keys(localStorage).forEach(function(key){
         // if it is a task > starts with i (id7, id8, etc.)
         if (key[0] == 'i') {
@@ -25,21 +23,22 @@ function loadTasksFromStorage() {
             let jsonString = localStorage.getItem(key);
             let jsonObject = JSON.parse(jsonString);
             taskArray[key] = jsonObject.text
-            //console.log(jsonString)
-            //console.log(jsonObject)
         }
-        //console.log(objtest)
     });
-
+    // sort tasks by id, and add them to the DOM
     taskArray.sort()
     Object.keys(taskArray).forEach(key => {
-        console.log(taskArray)
+        // console.log(taskArray)
         NewListItem(taskArray[key], false, key)
     })
 }
 
+// creates object from a new task's text value
+function taskObj(task) {
+    this.text = task;
+}
 
-
+// store new tasks in localStorage
 function storeTask(key, task) {
     console.log('storeTask')
     let obj = new taskObj(task);
@@ -55,11 +54,7 @@ function getTask(key) {
     console.log(obj.text)
 }
 
-function taskObj(task) {
-    this.text = task;
-}
-
-
+// delete task <div> when the child <button> is clicked
 function deleteTask(button) {
     let parentID = button.parentElement.id;
     //console.log(deleteBtn)
@@ -68,6 +63,7 @@ function deleteTask(button) {
     localStorage.removeItem(`id${parentID}`)
     
 }
+
 
 function readNewTask() {
     let regExp = /[a-zA-Z]/g;
@@ -78,6 +74,7 @@ function readNewTask() {
     }
 }
 
+// adds a new <li> element to the DOM
 function NewListItem(newTask, isNew, key) {
     console.log('NewListItem')
 
@@ -87,44 +84,44 @@ function NewListItem(newTask, isNew, key) {
     const newContent = document.createTextNode(newTask)
     const newIcon = document.createElement("i")
     const newCheckbox = document.createElement("input")
-    
     let itemID = String(LastItemID() + 1)
 
+    // use the existing id if the task is not new > from localStorage
     if (!isNew) {itemID = String(key.slice(2))}
 
-    console.log('next ID: ' + itemID)
+    //console.log('next ID: ' + itemID)
 
-    // <div class="list-item">
+    // construct <div class="list-item">
     newDiv.setAttribute("class", "list-item")
     newDiv.setAttribute("id", itemID)
-    // <button class="del-btn" id="delete" >
+    
+    // construct <button class="del-btn" id="delete" >
     newButton.setAttribute("class", "del-btn")
     newButton.setAttribute("id", itemID)
     newButton.addEventListener("click", () => {deleteTask(newButton)})
-    // <i class="fa-solid fa-trash">
+    // construct <i class="fa-solid fa-trash">
     newIcon.setAttribute("class", "fa-solid fa-trash")
-    // <input type="checkbox" name="completed" id="6" />
+    // construct <input type="checkbox" name="completed" id="6" />
     newCheckbox.setAttribute("type", "checkbox")
     newCheckbox.setAttribute("name", "completed")
 
-    // parent all new elements
+    // parent all constructed elements
     newButton.appendChild(newIcon)
     newItem.appendChild(newCheckbox)
     newItem.appendChild(newContent)
     newDiv.appendChild(newItem)
     newDiv.appendChild(newButton)
 
-    // console.log(isNew)
-    console.log(`id${itemID}`)
+    // new task is added to user's localStorage
     if(isNew) storeTask(`id${itemID}`, newTask);
 
-    // add new item to list
+    // append task to list element
     taskList.appendChild(newDiv)
 }
 
+// returns the highest ID number present in the current list
 function LastItemID() {
     let listItems = taskList.children
-    // console.log(taskList.children)
     let lastID = 0
     for (let i = 0; i < listItems.length; i++) {
         if (parseInt(listItems[i].id) > lastID) {
