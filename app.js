@@ -70,10 +70,12 @@ function deleteTask(button) {
 }
 
 function readNewTask() {
-    const newInput = newTaskField.value
-    newTaskField.value = ''
-    NewListItem(newInput, true)
-
+    let regExp = /[a-zA-Z]/g;
+    if (regExp.test(newTaskField.value)) {
+        const newInput = newTaskField.value
+        newTaskField.value = ''
+        NewListItem(newInput, true)
+    }
 }
 
 function NewListItem(newTask, isNew, key) {
