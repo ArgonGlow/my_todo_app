@@ -53,7 +53,6 @@ h1 {
     width: 100%;
     text-align: center;
     /* margin: auto; */
-
 }
 
 ul {
@@ -65,17 +64,18 @@ ul {
     padding: 0;
     width: 90%;
     list-style: none;
-    
 }
 
 .list-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: top;
     background-color: aqua;
     height: 100%;
     margin: 0;
     padding: 0;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .list-item li {
