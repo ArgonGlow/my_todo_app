@@ -17,8 +17,8 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: "Ubuntu", sans-serif;
     background-color: var(--eerieBlack);
+    font-family: "Ubuntu", sans-serif;
     color: var(--isabelline);
 }
 
@@ -31,15 +31,14 @@ h1 {
     justify-content: center;
     justify-items: center;
     text-align: center;
-    /* background-color: azure; */
 }
 
 .new-task-div label {
-    background-color: var(--taskBackground);
-    padding: 0;
-    width: 80%;
-    text-align: center;
     overflow: hidden;
+    text-align: center;
+    width: 80%;
+    padding: 0;
+    background-color: var(--taskBackground);
     border: 1px solid rgba(0, 0, 0, .7);
     border-radius: 10px;
     -webkit-box-shadow: 3px 3px 10px -4px #000000; 
@@ -51,11 +50,10 @@ h1 {
     height: 100%;
     padding: 10px;
     padding-left: 10px;
-    font-size: 1.2em;
-    border: 0;
-    color: rgba(255, 255, 255, 1);
-    /* background-color: rgb(66, 66, 66); */
     background-color: rgba(66, 66, 66, 0);
+    border: 0;
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 1);
 }
 
 .new-task-div input::placeholder {
@@ -64,22 +62,20 @@ h1 {
 }
 
 .new-task-div button {
+    vertical-align: top;
     width: 25%;
     height: 100%;
     padding: 5px;
-    vertical-align: top;
     background-color: var(--emerald);
-    /* color: white; */
-    color: rgb(55, 55, 55);
     border: 0;
     font-family: "Ubuntu", sans-serif;
     font-size: 1.5rem;
+    color: rgb(55, 55, 55);
 }
 
 .list-container {
-    width: 100%;
     text-align: center;
-    /* margin: auto; */
+    width: 100%;
 }
 
 ul {
@@ -87,21 +83,20 @@ ul {
     /* grid-template-columns: 1fr; */
     /* grid-template-columns: repeat(2, minmax(20vw, 200px)); */
     /* grid-template-rows: auto; */
+    list-style: none;
+    width: 95%;
     margin: 2em auto;
     padding: 0;
-    width: 95%;
-    list-style: none;
 }
 
 .list-container p {
     position: absolute;
+    left: calc(50% - 150px);
     width: 300px;
     max-width: 95%;
-    left: calc(50% - 150px);
     font-size: 1.2rem;
-    /* color: rgb(167, 167, 167); */
-    color: #525252;
     font-style: italic;
+    color: #525252;
     z-index: -1;
 }
 
@@ -110,43 +105,39 @@ ul {
     justify-content: space-between;
     align-items: top;
     overflow: hidden;
-    background-color: rgb(50, 50, 50);
     height: 100%;
     margin: .5rem 0;
     padding: 0;
-    word-wrap: break-word;
-    word-break: break-all;
+    background-color: rgb(50, 50, 50);
+    border: 1px solid rgba(0, 0, 0, .7);
     border-radius: 10px;
     -webkit-box-shadow: 3px 3px 10px -4px #000000; 
     box-shadow: 3px 3px 10px -4px #000000;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .list-item li {
-    /* height: 100%; */
-    /* padding: 10px; */
-    font-size: 1.2em;
+    text-align: left;
     margin: 0;
     padding: 10px 5px;
-    text-align: left;
-    /* background-color: darkgreen; */
-    /* border: 2px solid black; */
+    font-size: 1.2em;
 }
 
 input[type="checkbox"] {
-    margin-right: 15px;
     vertical-align: middle;
+    margin-right: 15px;
 }
 
 .del-btn {
-    /* display: inline-block; */
-    font-size: 1.5em;
     height: 10%;
     margin: auto 0;
     padding: 8px 10px;
-    color: rgba(55, 55, 55);
+    font-size: 1.5em;
     /* background-color: rgba(0, 0, 0, .5); */
     background-color: var(--emerald);
     border: 0;
+    color: rgba(55, 55, 55);
     transition: .3s ease;
 }
 
