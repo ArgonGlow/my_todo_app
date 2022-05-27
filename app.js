@@ -83,7 +83,7 @@ function readNewTask() {
     }
 }
 
-// adds a new <li> element to the DOM
+// adds a new <li> element to the DOM 
 function NewListItem(newTask, isNew, key) {
     console.log('NewListItem')
 
