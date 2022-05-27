@@ -1,15 +1,23 @@
+// main variables
 const taskList = document.getElementById('task-list')
 const confirmBtn = document.getElementById('add')
 const deleteBtn = document.getElementById('delete')
 const newTaskField = document.getElementById('add-task')
 
-confirmBtn.addEventListener("click", readNewTask)
-
 //localStorage.clear // for clearing storage when debugging
-
 
 // load stored tasks on page-load
 loadTasksFromStorage()
+
+// create new task when 'add' button is clicked
+confirmBtn.addEventListener("click", readNewTask)
+
+// create new task when pressing enter is pressed in input field
+newTaskField.addEventListener("keydown", ({key}) => {
+    if (key === "Enter") {
+        readNewTask();
+    }
+})
 
 // retrieves all locally stored tasks
 function loadTasksFromStorage() {
@@ -47,6 +55,7 @@ function storeTask(key, task) {
     getTask(key);
 }
 
+// debug function > currently unhooked
 function getTask(key) {
     console.log('getTask')
     let jsonString = localStorage.getItem(key);
@@ -64,9 +73,9 @@ function deleteTask(button) {
     
 }
 
-
+// sends input-field text to NewListItem if it contains enough contiguous alphanumericals 
 function readNewTask() {
-    let regExp = /[a-zA-Z]/g;
+    let regExp = /(\w{3,})/g;
     if (regExp.test(newTaskField.value)) {
         const newInput = newTaskField.value
         newTaskField.value = ''
