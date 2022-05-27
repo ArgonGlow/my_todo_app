@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
-:root {
-    --eerieBlack: #191919;
-    --isabelline: #F4F3EE;
-    --cadet: #57737A;
-    --emerald: #14CC60;
-    --taskBackground: rgb(50, 50, 50);
-}
-
 * {
     box-sizing: border-box;
   }
@@ -18,8 +10,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Ubuntu", sans-serif;
-    background-color: var(--eerieBlack);
-    color: var(--isabelline);
+    background-color: rgb(35, 35, 35);
+    color: white;
 }
 
 h1 {
@@ -35,15 +27,13 @@ h1 {
 }
 
 .new-task-div label {
-    background-color: var(--taskBackground);
+    background-color: rgb(66, 66, 66);
     padding: 0;
     width: 80%;
     text-align: center;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, .7);
+    border: 2px solid rgba(0, 0, 0, .7);
     border-radius: 10px;
-    -webkit-box-shadow: 3px 3px 10px -4px #000000; 
-    box-shadow: 3px 3px 10px -4px #000000;
 }
 
 .new-task-div input {
@@ -53,14 +43,9 @@ h1 {
     padding-left: 10px;
     font-size: 1.2em;
     border: 0;
-    color: rgba(255, 255, 255, 1);
+    color: white;
     /* background-color: rgb(66, 66, 66); */
     background-color: rgba(66, 66, 66, 0);
-}
-
-.new-task-div input::placeholder {
-    color: var(--isabelline);
-    opacity: 0.3;
 }
 
 .new-task-div button {
@@ -68,12 +53,12 @@ h1 {
     height: 100%;
     padding: 5px;
     vertical-align: top;
-    background-color: var(--emerald);
-    /* color: white; */
-    color: rgb(55, 55, 55);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
     border: 0;
-    font-family: "Ubuntu", sans-serif;
-    font-size: 1.5rem;
+    font-family: Lato, sans-serif;
+    font-size: 1.2rem;
+    /* border: 0; */
 }
 
 .list-container {
@@ -99,9 +84,7 @@ ul {
     max-width: 95%;
     left: calc(50% - 150px);
     font-size: 1.2rem;
-    /* color: rgb(167, 167, 167); */
-    color: #525252;
-    font-style: italic;
+    color: rgb(167, 167, 167);
     z-index: -1;
 }
 
@@ -117,8 +100,6 @@ ul {
     word-wrap: break-word;
     word-break: break-all;
     border-radius: 10px;
-    -webkit-box-shadow: 3px 3px 10px -4px #000000; 
-    box-shadow: 3px 3px 10px -4px #000000;
 }
 
 .list-item li {
@@ -143,9 +124,8 @@ input[type="checkbox"] {
     height: 10%;
     margin: auto 0;
     padding: 8px 10px;
-    color: rgba(55, 55, 55);
-    /* background-color: rgba(0, 0, 0, .5); */
-    background-color: var(--emerald);
+    color: rgb(55, 55, 55);
+    background-color: rgba(0, 0, 0, .5);
     border: 0;
     transition: .3s ease;
 }
