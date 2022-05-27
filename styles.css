@@ -25,7 +25,7 @@ body {
 h1 {
     text-align: center;
 }
-
+/* New Task Input */
 .new-task-div {
     display: flex;
     justify-content: center;
@@ -72,7 +72,8 @@ h1 {
     font-size: 1.5rem;
     color: rgb(55, 55, 55);
 }
-
+/* End of New Task Input */
+/* Task List */
 .list-container {
     text-align: center;
     width: 100%;
@@ -128,7 +129,7 @@ input[type="checkbox"] {
     vertical-align: middle;
     margin-right: 15px;
 }
-
+/* Delete Task Buttons */
 .del-btn {
     height: 10%;
     margin: auto 0;
@@ -146,3 +147,5 @@ input[type="checkbox"] {
     color: white;
     transition: .3s ease;
 }
+/* End of Delete Task Buttons */
+/* End of Task List */

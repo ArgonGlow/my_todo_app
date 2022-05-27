@@ -12,11 +12,16 @@
 </head>
 <body>
   <h1>To-Day</h1>
+
+  <!-- New Task Input -->
   <div class="new-task-div">
     <label><input type="text" id="add-task" placeholder="new task..."><button class="confirm-btn" id="add" ><i class="fa-solid fa-plus"></i></button></label>
   </div>
+  <!-- End of New Task Input -->
+
+  <!-- Task List -->
   <div class="list-container">
-    <p>You currently don't have any tasks</p>
+    <p>You currently don't have any tasks</p> <!-- Hidden by z-index when first task is created -->
     <ul id="task-list">
       <!-- <div class="list-item" id="1"><li><input type="checkbox" name="completed" />task 1</li><button class="del-btn" id="delete" ><i class="fa-solid fa-trash"></i></button></div>
       <div class="list-item" id="2"><li><input type="checkbox" name="completed" />task 2</li><button class="del-btn" id="delete" ><i class="fa-solid fa-trash"></i></button></div>
@@ -26,5 +31,7 @@
       <!-- <div class="list-item" id="6"><li><input type="checkbox" name="completed" />task 6</li><button class="del-btn" id="delete" ><i class="fa-solid fa-trash"></i></button></div>  -->
     </ul>
   </div>
+  <!-- End of Task List -->
+
 </body>
 </html>
