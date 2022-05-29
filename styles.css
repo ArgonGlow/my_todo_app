@@ -120,15 +120,31 @@ ul {
 
 .list-item li {
     text-align: left;
+    width: 95%;
     margin: 0;
     padding: 10px 5px;
-    font-size: 1.2em;
+    font-size: 1.2rem;
 }
 
 input[type="checkbox"] {
     vertical-align: middle;
     margin-right: 15px;
 }
+
+#task-text {
+    width: 80%;
+    background-color: rgba(66, 66, 66, 0);
+    border: 0;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 1);
+}
+
+#task-text:focus {
+    outline: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+    border-bottom: 1px solid #525252;
+}
+
 /* Delete Task Buttons */
 .del-btn {
     height: 10%;
