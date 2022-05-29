@@ -128,7 +128,12 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     newField.setAttribute("type", "text")
     newField.setAttribute("id", "task-text")
     newField.setAttribute("placeholder", "...")
-    newField.addEventListener("focusout", () => {updateTask(newField)})
+    newField.addEventListener("focusout", () => {updateTask(newField, newCheckbox.checked)})
+    newField.addEventListener("keydown", ({key}) => {
+        if (key === "Enter") {
+            updateTask(newField);
+            newField.blur();
+        }})
     newField.value = newTask;
     // construct <button class="del-btn" id="delete" >
     newButton.setAttribute("class", "del-btn")
@@ -142,7 +147,7 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     newCheckbox.setAttribute("name", "completed")
     newCheckbox.addEventListener("change",() => {
         console.log(newCheckbox.checked);
-        updateTask(newCheckbox, isChecked = newCheckbox.checked)})
+        updateTask(newField, newCheckbox.checked)})
     // checks checkbox of tasks stored as such
     if (isChecked) newCheckbox.checked = true;
 
