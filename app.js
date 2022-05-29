@@ -122,8 +122,7 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
 
     // construct <div class="list-item">
     Object.assign(newDiv, { className: 'list-item', id: itemID })
-    //newDiv.setAttribute("class", "list-item")
-    //newDiv.setAttribute("id", itemID)
+
     // construct <input type="text" id="task-text" placeholder="...">
     Object.assign(newField, {
         type: 'text',
@@ -146,8 +145,7 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     // construct <i class="fa-solid fa-trash">
     newIcon.setAttribute("class", "fa-solid fa-trash")
     // construct <input type="checkbox" name="completed" id="6" />
-    newCheckbox.setAttribute("type", "checkbox")
-    newCheckbox.setAttribute("name", "completed")
+    Object.assign(newCheckbox, { type: 'checkbox', name: 'completed' })
     newCheckbox.addEventListener("change",() => {
         updateTask(newField, newCheckbox.checked)})
     
@@ -163,9 +161,6 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
 
     // new/edited task is added/updated to user's localStorage
     if(isNew) storeTask(`id${itemID}`, newTask, false);
-
-
-    console.log(newDiv)
 
     // append task to list element
     taskList.appendChild(newDiv)
