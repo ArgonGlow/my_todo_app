@@ -31,7 +31,6 @@ function loadTasksFromStorage() {
             let jsonString = localStorage.getItem(key);
             let jsonObject = JSON.parse(jsonString);
             jsonObject["id"] = key;
-            console.log(jsonObject.id);
             taskArray.push(jsonObject);
         }
     });
@@ -40,7 +39,6 @@ function loadTasksFromStorage() {
     taskArray.sort((a, b) => a.id.slice(2) - b.id.slice(2));
     taskArray.forEach(task => {
         console.log(taskArray);
-        console.log(task.text);
         NewListItem(task.text, false, task.id, task.checked);
     });
 }
