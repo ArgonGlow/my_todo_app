@@ -27,17 +27,22 @@ function loadTasksFromStorage() {
     Object.keys(localStorage).forEach(function(key){
         // if it is a task > starts with i (id7, id8, etc.)
         if (key[0] == 'i') {
-            //console.log(localStorage.getItem(key));
+            // console.log(key);
             let jsonString = localStorage.getItem(key);
             let jsonObject = JSON.parse(jsonString);
-            taskArray[key] = jsonObject.text
+            jsonObject["id"] = key;
+            console.log(jsonObject.id);
+            taskArray.push(jsonObject);
         }
     });
+
     // sort tasks by id, and add them to the DOM
     taskArray.sort()
-    Object.keys(taskArray).forEach(key => {
-        // console.log(taskArray)
-        NewListItem(taskArray[key], false, key)
+    taskArray.forEach(task => {
+        console.log(taskArray)
+        console.log(task.text)
+        NewListItem(task.text, false, task.id, task.checked)
+        // NewListItem(newTask, isNew, taskID, isChecked = false)
     })
 }
 
@@ -47,26 +52,35 @@ function taskObj(task) {
 }
 
 // store new tasks in localStorage
-function storeTask(key, task) {
+function storeTask(key, isChecked, task) {
     console.log('storeTask')
     let obj = new taskObj(task);
+    obj.checked = isChecked;
     let jsonObject = JSON.stringify(obj);
     localStorage.setItem(key, jsonObject);
     getTask(key);
 }
 
-// debug function > currently unhooked
+// debug function
 function getTask(key) {
     console.log('getTask')
     let jsonString = localStorage.getItem(key);
     let obj = JSON.parse(jsonString);
-    console.log(obj.text)
+    console.log(obj);
+    console.log("text", obj.text);
 }
 
 // update an existing task in localStorage
-function updateTask(textField) {
-    let parentID = textField.parentElement.parentElement.id;
-    storeTask(`id${parentID}`, textField.value)
+function updateTask(input, isChecked = false) {
+    let parentID = input.parentElement.parentElement.id;
+    console.log("parentID" , parentID)
+
+    if (input.getAttribute('type') === 'text') {
+        console.log("text")
+        storeTask(`id${parentID}`, input.value, isChecked)
+    } else {
+        storeTask(`id${parentID}`, isChecked, input.nextElementSibling.value)
+    }
 }
 
 // delete task <div> when the child <button> is clicked
@@ -76,7 +90,6 @@ function deleteTask(button) {
     console.log("del-parent: " + parentID);
     button.parentElement.remove();
     localStorage.removeItem(`id${parentID}`)
-    
 }
 
 // sends input-field text to NewListItem if it contains enough contiguous alphanumericals 
@@ -90,7 +103,7 @@ function readNewTask() {
 }
 
 // adds a new <li> element to the DOM 
-function NewListItem(newTask, isNew, key) {
+function NewListItem(newTask, isNew, taskID, isChecked = false) {
     console.log('NewListItem')
 
     const newDiv = document.createElement("div")
@@ -103,7 +116,8 @@ function NewListItem(newTask, isNew, key) {
     let itemID = String(LastItemID() + 1)
 
     // use the existing id if the task is not new > from localStorage
-    if (!isNew) {itemID = String(key.slice(2))}
+    console.log("taskID", taskID)
+    if (!isNew) {itemID = String(taskID.slice(2))}
 
     //console.log('next ID: ' + itemID)
 
@@ -126,6 +140,11 @@ function NewListItem(newTask, isNew, key) {
     // construct <input type="checkbox" name="completed" id="6" />
     newCheckbox.setAttribute("type", "checkbox")
     newCheckbox.setAttribute("name", "completed")
+    newCheckbox.addEventListener("change",() => {
+        console.log(newCheckbox.checked);
+        updateTask(newCheckbox, isChecked = newCheckbox.checked)})
+
+    if (isChecked) newCheckbox.checked = true;
 
     // parent all constructed elements
     newButton.appendChild(newIcon)
@@ -135,7 +154,7 @@ function NewListItem(newTask, isNew, key) {
     newDiv.appendChild(newButton)
 
     // new task is added to user's localStorage
-    if(isNew) storeTask(`id${itemID}`, newTask);
+    if(isNew) storeTask(`id${itemID}`, false, newTask);
 
     // append task to list element
     taskList.appendChild(newDiv)
