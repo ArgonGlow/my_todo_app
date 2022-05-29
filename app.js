@@ -36,6 +36,9 @@ function loadTasksFromStorage() {
         }
     });
 
+    console.log(taskArray.id)
+    console.log(taskArray.sort((a, b) => a.id.slice(2) - b.id.slice(2)))
+
     // sort tasks by id, and add them to the DOM
     taskArray.sort()
     taskArray.forEach(task => {
@@ -104,37 +107,37 @@ function readNewTask() {
 
 // adds a new <li> element to the DOM 
 function NewListItem(newTask, isNew, taskID, isChecked = false) {
-    console.log('NewListItem')
+    console.log('NewListItem:', newTask)
 
     const newDiv = document.createElement("div")
     const newItem = document.createElement("li")
     const newButton = document.createElement("button")
-    //const newContent = document.createTextNode(newTask)
     const newField = document.createElement("input")
     const newIcon = document.createElement("i")
     const newCheckbox = document.createElement("input")
     let itemID = String(LastItemID() + 1)
 
     // use the existing id if the task is not new > from localStorage
-    console.log("taskID", taskID)
     if (!isNew) {itemID = String(taskID.slice(2))}
 
-    //console.log('next ID: ' + itemID)
-
     // construct <div class="list-item">
-    newDiv.setAttribute("class", "list-item")
-    newDiv.setAttribute("id", itemID)
+    Object.assign(newDiv, { className: 'list-item', id: itemID })
+    //newDiv.setAttribute("class", "list-item")
+    //newDiv.setAttribute("id", itemID)
     // construct <input type="text" id="task-text" placeholder="...">
-    newField.setAttribute("type", "text")
-    newField.setAttribute("id", "task-text")
-    newField.setAttribute("placeholder", "...")
+    Object.assign(newField, {
+        type: 'text',
+        id: 'task-text',
+        placeholder: '...',
+        value: newTask
+    })
     newField.addEventListener("focusout", () => {updateTask(newField, newCheckbox.checked)})
     newField.addEventListener("keydown", ({key}) => {
         if (key === "Enter") {
             updateTask(newField);
             newField.blur();
         }})
-    newField.value = newTask;
+
     // construct <button class="del-btn" id="delete" >
     newButton.setAttribute("class", "del-btn")
     // newButton.setAttribute("id", itemID)
@@ -146,8 +149,8 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     newCheckbox.setAttribute("type", "checkbox")
     newCheckbox.setAttribute("name", "completed")
     newCheckbox.addEventListener("change",() => {
-        console.log(newCheckbox.checked);
         updateTask(newField, newCheckbox.checked)})
+    
     // checks checkbox of tasks stored as such
     if (isChecked) newCheckbox.checked = true;
 
@@ -160,6 +163,9 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
 
     // new/edited task is added/updated to user's localStorage
     if(isNew) storeTask(`id${itemID}`, newTask, false);
+
+
+    console.log(newDiv)
 
     // append task to list element
     taskList.appendChild(newDiv)
