@@ -63,6 +63,12 @@ function getTask(key) {
     console.log(obj.text)
 }
 
+// update an existing task in localStorage
+function updateTask(textField) {
+    let parentID = textField.parentElement.parentElement.id;
+    storeTask(`id${parentID}`, textField.value)
+}
+
 // delete task <div> when the child <button> is clicked
 function deleteTask(button) {
     let parentID = button.parentElement.id;
@@ -90,7 +96,8 @@ function NewListItem(newTask, isNew, key) {
     const newDiv = document.createElement("div")
     const newItem = document.createElement("li")
     const newButton = document.createElement("button")
-    const newContent = document.createTextNode(newTask)
+    //const newContent = document.createTextNode(newTask)
+    const newField = document.createElement("input")
     const newIcon = document.createElement("i")
     const newCheckbox = document.createElement("input")
     let itemID = String(LastItemID() + 1)
@@ -103,10 +110,16 @@ function NewListItem(newTask, isNew, key) {
     // construct <div class="list-item">
     newDiv.setAttribute("class", "list-item")
     newDiv.setAttribute("id", itemID)
-    
+    // construct <input type="text" id="task-text" placeholder="...">
+    newField.setAttribute("type", "text")
+    newField.setAttribute("id", "task-text")
+    newField.setAttribute("placeholder", "...")
+    newField.addEventListener("focusout", () => {updateTask(newField)})
+    newField.value = newTask;
     // construct <button class="del-btn" id="delete" >
     newButton.setAttribute("class", "del-btn")
-    newButton.setAttribute("id", itemID)
+    // newButton.setAttribute("id", itemID)
+    newButton.setAttribute("id", "delete")
     newButton.addEventListener("click", () => {deleteTask(newButton)})
     // construct <i class="fa-solid fa-trash">
     newIcon.setAttribute("class", "fa-solid fa-trash")
@@ -117,7 +130,7 @@ function NewListItem(newTask, isNew, key) {
     // parent all constructed elements
     newButton.appendChild(newIcon)
     newItem.appendChild(newCheckbox)
-    newItem.appendChild(newContent)
+    newItem.appendChild(newField)
     newDiv.appendChild(newItem)
     newDiv.appendChild(newButton)
 
