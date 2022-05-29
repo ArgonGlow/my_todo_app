@@ -1,27 +1,27 @@
 // main variables
-const taskList = document.getElementById('task-list')
-const confirmBtn = document.getElementById('add')
-const deleteBtn = document.getElementById('delete')
-const newTaskField = document.getElementById('add-task')
+const taskList = document.getElementById('task-list');
+const confirmBtn = document.getElementById('add');
+const deleteBtn = document.getElementById('delete');
+const newTaskField = document.getElementById('add-task');
 
 //localStorage.clear // for clearing storage when debugging
 
 // load stored tasks on page-load
-loadTasksFromStorage()
+loadTasksFromStorage();
 
 // create new task when 'add' button is clicked
-confirmBtn.addEventListener("click", readNewTask)
+confirmBtn.addEventListener("click", readNewTask);
 
 // create new task when pressing enter is pressed in input field
 newTaskField.addEventListener("keydown", ({key}) => {
     if (key === "Enter") {
         readNewTask();
     }
-})
+});
 
 // retrieves all locally stored tasks
 function loadTasksFromStorage() {
-    let taskArray = []
+    let taskArray = [];
 
     // check every object in localStorage
     Object.keys(localStorage).forEach(function(key){
@@ -36,17 +36,13 @@ function loadTasksFromStorage() {
         }
     });
 
-    console.log(taskArray.id)
-    console.log(taskArray.sort((a, b) => a.id.slice(2) - b.id.slice(2)))
-
     // sort tasks by id, and add them to the DOM
-    taskArray.sort()
+    taskArray.sort((a, b) => a.id.slice(2) - b.id.slice(2));
     taskArray.forEach(task => {
-        console.log(taskArray)
-        console.log(task.text)
-        NewListItem(task.text, false, task.id, task.checked)
-        // NewListItem(newTask, isNew, taskID, isChecked = false)
-    })
+        console.log(taskArray);
+        console.log(task.text);
+        NewListItem(task.text, false, task.id, task.checked);
+    });
 }
 
 // creates object from a new task's text value
@@ -66,7 +62,7 @@ function storeTask(key, task, isChecked) {
 
 // debug function
 function getTask(key) {
-    console.log('getTask')
+    console.log('getTask');
     let jsonString = localStorage.getItem(key);
     let obj = JSON.parse(jsonString);
     console.log(obj);
@@ -76,52 +72,52 @@ function getTask(key) {
 // update an existing task in localStorage
 function updateTask(input, isChecked = false) {
     let parentID = input.parentElement.parentElement.id;
-    console.log("parentID" , parentID)
+    console.log("parentID" , parentID);
 
     if (input.getAttribute('type') === 'text') {
-        console.log("text")
-        storeTask(`id${parentID}`, input.value, isChecked)
+        console.log("text");
+        storeTask(`id${parentID}`, input.value, isChecked);
     } else {
-        storeTask(`id${parentID}`, input.nextElementSibling.value, isChecked)
+        storeTask(`id${parentID}`, input.nextElementSibling.value, isChecked);
     }
 }
 
 // delete task <div> when the child <button> is clicked
 function deleteTask(button) {
     let parentID = button.parentElement.id;
-    //console.log(deleteBtn)
+    //console.log(deleteBtn);
     console.log("del-parent: " + parentID);
     button.parentElement.remove();
-    localStorage.removeItem(`id${parentID}`)
+    localStorage.removeItem(`id${parentID}`);
 }
 
 // sends input-field text to NewListItem if it contains enough contiguous alphanumericals 
 function readNewTask() {
     let regExp = /(\w{3,})/g;
     if (regExp.test(newTaskField.value)) {
-        const newInput = newTaskField.value
-        newTaskField.value = ''
-        NewListItem(newInput, true)
+        const newInput = newTaskField.value;
+        newTaskField.value = '';
+        NewListItem(newInput, true);
     }
 }
 
 // adds a new <li> element to the DOM 
 function NewListItem(newTask, isNew, taskID, isChecked = false) {
-    console.log('NewListItem:', newTask)
+    console.log('NewListItem:', newTask);
 
-    const newDiv = document.createElement("div")
-    const newItem = document.createElement("li")
-    const newButton = document.createElement("button")
-    const newField = document.createElement("input")
-    const newIcon = document.createElement("i")
-    const newCheckbox = document.createElement("input")
-    let itemID = String(LastItemID() + 1)
+    const newDiv = document.createElement("div");
+    const newItem = document.createElement("li");
+    const newButton = document.createElement("button");
+    const newField = document.createElement("input");
+    const newIcon = document.createElement("i");
+    const newCheckbox = document.createElement("input");
+    let itemID = String(LastItemID() + 1);
 
     // use the existing id if the task is not new > from localStorage
-    if (!isNew) {itemID = String(taskID.slice(2))}
+    if (!isNew) {itemID = String(taskID.slice(2));}
 
     // construct <div class="list-item">
-    Object.assign(newDiv, { className: 'list-item', id: itemID })
+    Object.assign(newDiv, { className: 'list-item', id: itemID });
 
     // construct <input type="text" id="task-text" placeholder="...">
     Object.assign(newField, {
@@ -129,52 +125,52 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
         id: 'task-text',
         placeholder: '...',
         value: newTask
-    })
-    newField.addEventListener("focusout", () => {updateTask(newField, newCheckbox.checked)})
+    });
+    newField.addEventListener("focusout", () => {updateTask(newField, newCheckbox.checked)});
     newField.addEventListener("keydown", ({key}) => {
         if (key === "Enter") {
             updateTask(newField);
             newField.blur();
-        }})
+        }});
 
     // construct <button class="del-btn" id="delete" >
-    newButton.setAttribute("class", "del-btn")
+    newButton.setAttribute("class", "del-btn");
     // newButton.setAttribute("id", itemID)
-    newButton.setAttribute("id", "delete")
-    newButton.addEventListener("click", () => {deleteTask(newButton)})
+    newButton.setAttribute("id", "delete");
+    newButton.addEventListener("click", () => {deleteTask(newButton)});
     // construct <i class="fa-solid fa-trash">
-    newIcon.setAttribute("class", "fa-solid fa-trash")
+    newIcon.setAttribute("class", "fa-solid fa-trash");
     // construct <input type="checkbox" name="completed" id="6" />
-    Object.assign(newCheckbox, { type: 'checkbox', name: 'completed' })
+    Object.assign(newCheckbox, { type: 'checkbox', name: 'completed' });
     newCheckbox.addEventListener("change",() => {
-        updateTask(newField, newCheckbox.checked)})
+        updateTask(newField, newCheckbox.checked)});
     
     // checks checkbox of tasks stored as such
     if (isChecked) newCheckbox.checked = true;
 
     // parent all constructed elements
-    newButton.appendChild(newIcon)
-    newItem.appendChild(newCheckbox)
-    newItem.appendChild(newField)
-    newDiv.appendChild(newItem)
-    newDiv.appendChild(newButton)
+    newButton.appendChild(newIcon);
+    newItem.appendChild(newCheckbox);
+    newItem.appendChild(newField);
+    newDiv.appendChild(newItem);
+    newDiv.appendChild(newButton);
 
     // new/edited task is added/updated to user's localStorage
     if(isNew) storeTask(`id${itemID}`, newTask, false);
 
     // append task to list element
-    taskList.appendChild(newDiv)
+    taskList.appendChild(newDiv);
 }
 
 // returns the highest ID number present in the current list
 function LastItemID() {
-    let listItems = taskList.children
-    let lastID = 0
+    let listItems = taskList.children;
+    let lastID = 0;
     for (let i = 0; i < listItems.length; i++) {
         if (parseInt(listItems[i].id) > lastID) {
-            lastID = parseInt(listItems[i].id)
+            lastID = parseInt(listItems[i].id);
         }
     }
-    // console.log(lastID)
-    return lastID
+    // console.log(lastID);
+    return lastID;
 }
