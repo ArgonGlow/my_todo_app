@@ -52,7 +52,7 @@ function taskObj(task) {
 }
 
 // store new tasks in localStorage
-function storeTask(key, isChecked, task) {
+function storeTask(key, task, isChecked) {
     console.log('storeTask')
     let obj = new taskObj(task);
     obj.checked = isChecked;
@@ -79,7 +79,7 @@ function updateTask(input, isChecked = false) {
         console.log("text")
         storeTask(`id${parentID}`, input.value, isChecked)
     } else {
-        storeTask(`id${parentID}`, isChecked, input.nextElementSibling.value)
+        storeTask(`id${parentID}`, input.nextElementSibling.value, isChecked)
     }
 }
 
@@ -143,7 +143,7 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     newCheckbox.addEventListener("change",() => {
         console.log(newCheckbox.checked);
         updateTask(newCheckbox, isChecked = newCheckbox.checked)})
-
+    // checks checkbox of tasks stored as such
     if (isChecked) newCheckbox.checked = true;
 
     // parent all constructed elements
@@ -153,8 +153,8 @@ function NewListItem(newTask, isNew, taskID, isChecked = false) {
     newDiv.appendChild(newItem)
     newDiv.appendChild(newButton)
 
-    // new task is added to user's localStorage
-    if(isNew) storeTask(`id${itemID}`, false, newTask);
+    // new/edited task is added/updated to user's localStorage
+    if(isNew) storeTask(`id${itemID}`, newTask, false);
 
     // append task to list element
     taskList.appendChild(newDiv)
